@@ -8,8 +8,3 @@ app = Flask(__name__) #This is a standard way of creating a flask app.
 # So, whenever a user connect to the homepage, we want the user's connection to be handled by a method, which we are going to create right here below.
 def index():
     return "Hello World!, this is DebayCisse."
-
-
-
-if __name__ == '__main__':
-    app.run(host="0.0.0.0")
