@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>ToDo Items</title>
+    </head>
+    <body>
+        <ul>
+            {% for each_item in data %}
+                <li>{{ each_item.description }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
