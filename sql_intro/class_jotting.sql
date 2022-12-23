@@ -1,8 +1,50 @@
 ### Arithmetic Operators
 /*********************************************************
-    
+    We can perform arithmetic operation, such as the following on a set of columns with
+    numeric values and temporarily store the value in a new column, which is known as 
+    DERIVED COLUMN using AS operator and display this on our query result.
+
+    Arithmetic operators that are used for this kind of operations are : +, -, /, and *.
+
+    Order of Operations:
+    Remember PEMDAS from math class to help remember the order of operations? If not,
+    check out this link as a reminder. The same order of operations applies when using
+    arithmetic operators in SQL.
+
+    The following two statements have very different end results:
+    1. Standard_qty / standard_qty + gloss_qty + poster_qty
+    2. standard_qty / (standard_qty + gloss_qty + poster_qty)
+
+    It is likely that you mean to do the calculation as written in statement number 2!
 *********************************************************/
 
+### Logical Operators
+/*********************************************************
+    Logical Operators. Logical Operators include:
+
+    1. LIKE This allows you to perform operations similar to using WHERE and =, but for
+    cases when you might not know exactly what you are looking for.
+
+    2. IN This allows you to perform operations similar to using WHERE and =, but for 
+    more than one condition.
+
+    3. NOT This is used with IN and LIKE to select all of the rows NOT LIKE or NOT IN a 
+    certain condition.
+
+    4. AND & BETWEEN These allow you to combine operations where all combined conditions 
+    must be true.
+
+    5. OR This allows you to combine operations where at least one of the combined 
+    conditions must be true.
+
+*********************************************************/
+
+
+
+### 
+/*********************************************************
+    
+*********************************************************/
 
 
 
