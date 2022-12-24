@@ -246,7 +246,199 @@ LIMIT 10;
 
     In our Udacity SQL workspaces, note you can include an apostrophe by putting two single quotes together. For example,
     Macy's in our workspace would be 'Macy''s'.
+*********************************************************/
+-- Example
+    -- Use the web_events table to find all information regarding individuals who were contacted via the channel of organic or adwords.
+    SELECT *
+    FROM web_events 
+    WHERE channel IN ('organic', 'adwords')
 
+    -- Use the accounts table to find the account name, primary_poc, and sales_rep_id for Walmart, Target, and Nordstrom.
+    SELECT name, primary_poc, sales_rep_id
+    FROM accounts
+    WHERE name IN ('Walmart', 'Target', 'Nordstrom')
+
+
+
+
+
+
+
+
+
+### NOT
+/*********************************************************
+    The NOT operator is an extremely useful operator for working with the previous two operators we introduced: IN and LIKE. 
+    By specifying NOT LIKE or NOT IN, we can grab all of the rows that do not meet particular criteria.
+*********************************************************/
+-- Example
+    -- Use the accounts table to find the account name, primary poc, and sales rep id for all stores except Walmart, Target, and Nordstrom.
+
+        SELECT name, primary_poc, sales_rep_id
+        FROM accounts
+        WHERE name NOT IN ('Walmart', 'Target', 'Nordstrom')
+
+    -- Use the web_events table to find all information regarding individuals who were contacted via any method except using organic or adwords methods.
+        SELECT *
+        FROM web_events
+        WHERE channel NOT IN ('organic', 'adwords')
+
+    -- Use the accounts table to find:
+
+        -- All the companies whose names do not start with 'C'.
+            SELECT name
+            FROM accounts
+            WHERE name NOT LIKE 'C%'
+
+        -- All companies whose names do not contain the string 'one' somewhere in the name.
+            SELECT name
+            from accounts
+            WHERE name NOT LIKE '%one%'
+
+        -- All companies whose names do not end with 's'.
+            SELECT name
+            FROM accounts
+            WHERE name NOT LIKE '%s'
+
+
+
+
+
+
+
+
+
+### AND
+/*********************************************************
+    The AND operator is used within a WHERE statement to consider more than one logical clause at a time. 
+    Each time you link a new statement with an AND, you will need to specify the column you are interested 
+    in looking at. You may link as many statements as you would like to consider at the same time. This 
+    operator works with all of the operations we have seen so far including arithmetic operators (+, *, -, /). 
+    LIKE, IN, and NOT logic can also be linked together using the AND operator.
+*********************************************************/
+-- Examples
+    -- To list orders that took place from April 2016 to October 1st, 2016
+        SELECT *
+        FROM orders
+        WHERE occurred_at >= '2016-04-01' AND occurred_at <= '2016-10-01';
+
+    -- Write a query that returns all the orders where the standard_qty is over 1000, the poster_qty is 0, and the gloss_qty is 0.
+        SELECT *
+        FROM orders
+        WHERE standard_qty > 1000 AND poster_qty = 0 AND gloss_qty = 0;
+
+    -- Using the accounts table, find all the companies whose names do not start with 'C' and end with 's'.
+        SELECT name
+        FROM accounts
+        WHERE name NOT LIKE 'C%' AND name LIKE '%s';
+
+
+
+
+
+
+
+
+
+### BETWEEN
+/*********************************************************
+    Sometimes we can make a cleaner statement using BETWEEN than we can use AND. Particularly this is true 
+    when we are using the same column for different parts of our AND statement. In the previous video, we 
+    probably should have used BETWEEN.
+
+    Instead of writing :
+
+    WHERE occurred_at >= '2016-04-01' AND occurred_at <= '2016-10-01'
+
+    we can instead write, equivalently:
+
+    WHERE occurred_at BETWEEN '2016-04-01' AND '2016-10-01'
+
+*********************************************************/
+-- Example
+    /* When you use the BETWEEN operator in SQL, do the results include the values of your endpoints, or not? 
+     Figure out the answer to this important question by writing a query that displays the order date and 
+     gloss_qty data for all orders where gloss_qty is between 24 and 29. 
+    */       
+        SELECT occurred_at, gloss_qty
+        FROM orders
+        WHERE gloss_qty BETWEEN 24 AND 29
+        ORDER BY gloss_qty;
+        /* And it turns out that the both values (i.e 24 & 29) were included in the values of the result. So the 
+        answer to the question is that yes, the BETWEEN operator in SQL is inclusive; that is, the endpoint 
+        values are included. So the BETWEEN statement in this query is equivalent to having written: "WHERE 
+        gloss_qty >= 24 AND gloss_qty <= 29."
+        */
+
+    -- Use the web_events table to find all information regarding individuals who were contacted via the organic or adwords channels, and started their account at any point in 2016, sorted from newest to oldest.
+        SELECT *
+        FROM web_events
+        WHERE channel IN ('organic','adwords') AND occurred_at BETWEEN '2016-01-01' AND '2017-01-01'
+        ORDER BY occurred_at DESC ;
+            /* BETWEEN is tricky for dates! While BETWEEN is generally inclusive of endpoints, it assumes the time 
+            is at 00:00:00 (i.e. midnight) for dates. This is the reason why we set the right-side endpoint of the period at '2017-01-01'.
+            */
+
+
+
+
+
+
+
+
+
+### OR
+/*********************************************************
+    Similar to the AND operator, the OR operator can combine multiple statements. Each time you link a new statement 
+    with an OR, you will need to specify the column you are interested in looking at. You may link as many statements 
+    as you would like to consider at the same time. This operator works with all of the operations we have seen so far 
+    including arithmetic operators (+, *, -, /), LIKE, IN, NOT, AND, and BETWEEN logic can all be linked together using 
+    the OR operator.
+*********************************************************/
+-- Example
+    /* Find list of orders ids where either gloss_qty or poster_qty is greater than 4000. Only include the id field in 
+    the resulting table. */
+        SELECT id
+        FROM orders
+        WHERE gloss_qty > 4000 OR poster_qty > 4000;
+
+    /* Write a query that returns a list of orders where the standard_qty is zero and either the gloss_qty or poster_qty is 
+    over 1000. */
+        SELECT *
+        FROM orders
+        WHERE standard_qty = 0 AND (gloss_qty > 1000 OR poster_qty > 1000);
+
+    /* Find all the company names that start with a 'C' or 'W', and the primary contact contains 'ana' or 'Ana', but it 
+    doesn't contain 'eana' in accounts table. */
+        SELECT name, primary_poc
+        FROM orders
+        WHERE (name LIKE 'C%' OR name LIKE 'W%') AND ((primary_poc LIKE '%ana%' OR primary_poc LIKE '%Ana%') AND primary_poc NOT LIKE '%eana%');
+
+
+
+
+
+
+
+
+
+### 
+/*********************************************************
+    
+*********************************************************/
+
+
+
+
+
+
+
+
+
+
+### 
+/*********************************************************
+    
 *********************************************************/
 
 
@@ -262,6 +454,59 @@ LIMIT 10;
     
 *********************************************************/
 
+
+
+
+
+
+
+
+
+
+### 
+/*********************************************************
+    
+*********************************************************/
+
+
+
+
+
+
+
+
+
+### 
+/*********************************************************
+    
+*********************************************************/
+
+
+
+
+
+
+
+
+
+
+### 
+/*********************************************************
+    
+*********************************************************/
+
+
+
+
+
+
+
+
+
+### 
+/*********************************************************
+    
+*********************************************************/
 
 
 
